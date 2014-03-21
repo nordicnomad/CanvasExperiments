@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>Canvas tutorial</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/powerup.css" />
+    <script type="text/javascript">
+      function draw(){
+        var canvas = document.getElementById('tutorial');
+        if (canvas.getContext){
+          var ctx = canvas.getContext('2d');
+        }
+      }
+    </script>
+    
+  </head>
+  <body onload="draw();">
+    <canvas id="tutorial"></canvas>
+  </body>
+  <script>
+      
+      // We set the canvas size to match with the browser
+      $(document).ready(function(){
+        var w = $(window).innerWidth();
+        var h = $(window).innerHeight();
+
+        $('#tutorial').attr('height', h);
+        $('#tutorial').attr('width', w);
+
+        $(window).resize(function(){
+          w = $(window).width();
+          h = $(window).height();
+
+          $('#tutorial').attr('height', h);
+          $('#tutorial').attr('width', w);
+        });
+      });
+  </script>
+</html>√

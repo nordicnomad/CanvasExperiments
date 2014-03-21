@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>Simple Animation</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/powerup.css" />
+    
+  </head>
+  <body onload="animate();">
+    <canvas id="tutorial">Canvas Not Supported</canvas>
+  </body>
+
+  <script type="text/javascript">
+  // We set the canvas size to match with the browser
+      var w = $(window).innerWidth();
+      var h = $(window).innerHeight();
+
+      $(document).ready(function(){
+      
+        $('#tutorial').attr('height', h);
+        $('#tutorial').attr('width', w);
+
+        $(window).resize(function(){
+          w = $(window).width();
+          h = $(window).height();
+
+          $('#tutorial').attr('height', h);
+          $('#tutorial').attr('width', w);
+        });
+      });
+      var pattern = new Image();
+      var min = 50;
+      var x = 150;
+      var y = 150;
+      var spincounter = 0;
+
+      //Defining the animation
+      function animate() {
+        pattern.src = 'img/pattern.jpg';
+
+        setInterval(refreshingAnimate, 1000);
+
+        
+      }
+
+      function refreshingAnimate() {
+        drawShape(x, y);
+        spincounter++;
+        if(spincounter > 5)
+        {
+          x = width(w);
+          y = height(h);
+          spincounter = 0;
+        }
+        
+      }
+
+      function drawShape (x, y) {
+        
+        // set the context
+        var canvas = document.getElementById('tutorial');
+        
+        //make sure canvas is supported
+        if (canvas.getContext) {
+          
+          // use the context for drawing    
+          var ctx = canvas.getContext('2d');
+          
+          
+          ctx.save(); 
+          ctx.translate(x, y);
+
+          var time = new Date(); 
+          ctx.rotate( ((2*Math.PI) /6) * time.getSeconds() + 
+                      ((2*Math.PI) /6000) * time.getMilliseconds() );
+          ctx.translate(0,28.5);
+          ctx.drawImage(pattern, -3.5, -3.5);
+          ctx.restore();
+        }
+
+        
+      }
+
+      function width(w) {
+        q = Math.random() * (w);
+        return q; 
+      }
+      function height(h) {
+        g = Math.random() * (h);
+        return g;
+      }
+  </script>
+</html>

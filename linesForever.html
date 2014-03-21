@@ -1,0 +1,144 @@
+<html>
+  <head>
+    <title>Lines Forever</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/powerup.css" />
+    
+  </head>
+  <body onload="draw();">
+    <canvas id="tutorial"></canvas>
+  </body>
+  <script>
+      // We set the canvas size to match with the browser
+      var w = $(window).innerWidth();
+      var h = $(window).innerHeight();
+      $(document).ready(function() {
+        $('#tutorial').attr('height', h);
+        $('#tutorial').attr('width', w);
+
+        $(window).resize(function(){
+          w = $(window).width();
+          h = $(window).height();
+
+          $('#tutorial').attr('height', h);
+          $('#tutorial').attr('width', w);
+        });
+      });
+      
+      var canvas = document.getElementById('tutorial');
+        if (canvas.getContext){
+          var ctx = canvas.getContext('2d');
+        }
+
+      var startPointX = Math.round(w/2);
+      var startPointY = Math.round(h/2);
+      var lastx = startPointX;
+      var lasty = startPointY;
+      var movebyx = w * 0.01;
+      var movebyy = h *0.01;
+
+      var x = startPointX;
+      var y = startPointY;
+
+
+      $('#tutorial').click(function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        x = startPointX;
+        y = startPointY;
+        lastx = x;
+        lasty = y;
+      });
+
+      function draw(){
+        
+        setInterval(function(){
+          var gotox = diagonalx(lastx);
+          var gotoy = diagonaly(lasty);
+          
+          ctx.beginPath();
+
+          
+            ctx.moveTo(x, y);  
+            ctx.lineTo(gotox, gotoy);
+            ctx.stroke();
+            ctx.save();
+          
+          x = gotox; 
+          y = gotoy; 
+          
+          lastx = x;
+          lasty = y
+        }, 10
+        );
+        
+      }
+
+      function randomx(lastx){
+        var x = Math.random() * w;
+        while(x < (lastx - movebyx) || x > (lastx + movebyx))
+        {
+          var x = Math.random() * w;
+        }
+        return x;
+      }
+      
+      function randomy(lasty) {
+        var y = Math.random() * h;
+        while(y < (lasty - movebyy) || y > (lasty + movebyy))
+        {
+          var y = Math.random() * h;
+        }
+        return y;
+      }
+
+      function diagonalx(lastx) {
+        var x1 = lastx + movebyx; 
+        var x2 = lastx - movebyx; 
+        
+        var which = Math.round(Math.random() + 1);
+        if(x1 > (w+(movebyx * 2)))
+        {
+          which = 2;
+        }
+        if(x1 < (0 - (movebyx *2)))
+        {
+          which = 1;
+        }
+        switch(which)
+        {
+          case 1:
+            return x1;
+            break;
+          case 2:
+            return x2;
+            break;
+        }
+      }
+
+      function diagonaly(lasty) {
+        var y1 = lasty + movebyy; 
+        var y2 = lasty - movebyy; 
+        
+        var which = Math.round(Math.random() + 1);
+        if(y1 > (w + movebyy))
+        {
+          which = 2;
+        }
+        if(y1 < (0 - movebyy))
+        {
+          which = 1;
+        }
+        switch(which)
+        {
+          case 1:
+            return y1;
+            break;
+          case 2:
+            return y2;
+            break;
+        }
+      }
+
+  </script>
+</html>
+
