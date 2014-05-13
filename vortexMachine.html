@@ -1,0 +1,164 @@
+<html>
+  <head>
+    <title>Vortex Machine</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/powerup.css" />
+    <script rel="text/javascript">
+      // We set the canvas size to match with the browser
+      
+    </script>
+    <style>
+      html {
+        background-color: #e73827; /* Old browsers */
+      }
+      #tutorial {
+        background-color: #e73827; /* Old browsers */
+        
+        background: -moz-radial-gradient(center, ellipse cover,  #f2bc32 0%, #f6290c 9%, #f6290c 9%, #f6290c 13%, #f16f5c 18%, #f16f5c 18%, #f16f5c 22%, #f02f17 27%, #e73827 100%); /* FF3.6+ */
+        background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#f2bc32), color-stop(9%,#f6290c), color-stop(9%,#f6290c), color-stop(13%,#f6290c), color-stop(18%,#f16f5c), color-stop(18%,#f16f5c), color-stop(22%,#f16f5c), color-stop(27%,#f02f17), color-stop(100%,#e73827)); /* Chrome,Safari4+ */
+        background: -webkit-radial-gradient(center, ellipse cover,  #f2bc32 0%,#f6290c 9%,#f6290c 9%,#f6290c 13%,#f16f5c 18%,#f16f5c 18%,#f16f5c 22%,#f02f17 27%,#e73827 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-radial-gradient(center, ellipse cover,  #f2bc32 0%,#f6290c 9%,#f6290c 9%,#f6290c 13%,#f16f5c 18%,#f16f5c 18%,#f16f5c 22%,#f02f17 27%,#e73827 100%); /* Opera 12+ */
+        background: -ms-radial-gradient(center, ellipse cover,  #f2bc32 0%,#f6290c 9%,#f6290c 9%,#f6290c 13%,#f16f5c 18%,#f16f5c 18%,#f16f5c 22%,#f02f17 27%,#e73827 100%); /* IE10+ */
+        background: radial-gradient(ellipse at center,  #f2bc32 0%,#f6290c 9%,#f6290c 9%,#f6290c 13%,#f16f5c 18%,#f16f5c 18%,#f16f5c 22%,#f02f17 27%,#e73827 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2bc32', endColorstr='#e73827',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+        background-size: 1000px 1000px;
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="tutorial"</canvas>
+  </body>
+  <script>
+        var w = $(window).innerWidth();
+        var h = $(window).innerHeight();
+
+        $('#tutorial').attr('height', h);
+        $('#tutorial').attr('width', w);
+
+        $(window).resize(function(){
+          w = $(window).width();
+          h = $(window).height();
+
+          $('#tutorial').attr('height', h);
+          $('#tutorial').attr('width', w);
+        });
+
+        window.requestAnimFrame = (function(callback) {
+          return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+          function(callback) {
+            window.setTimeout(callback, 1000 / 60);
+          };
+        })();
+
+        
+  
+      function initArcs() {
+        var arcTotal = Math.round(w / 20);
+        if(arcTotal < 10){
+          arcTotal = 10;
+        }
+        else if(arcTotal > 70) {
+          arcTotal = 70;
+        }
+        var arcs = [];
+
+        // create 20 arcs
+        for( n = 0; n < arcTotal; n++) {
+          var radius = (n + Math.random()) * 20;
+          var width = Math.round((4 + (n - Math.random())) * 8);
+          // between 0 and 2 PI
+          //var startingAngle = Math.random() * 2 * Math.PI;
+          var startingAngle = Math.round(Math.random() * 1.5 * Math.PI);
+          // 1 to 3 revolutions per second
+          var speed = Math.round((Math.random() * -2) + (Math.random() * 2));
+          //var speed = (Math.random() * -2) + 1;
+
+          if(speed >= 0)
+          {
+            speed += 1;
+          }
+          else 
+          {
+            speed -= 1;
+          }
+          // between 0 and 1
+          var opacity = (n / arcTotal) * 1;
+
+          arcs.push({
+            radius: radius,
+            startingAngle: startingAngle,
+            width: width,
+            opacity: opacity,
+            speed: speed
+          });
+        }
+
+        return arcs;
+      }
+
+
+      function drawArcs(canvas, arcs) {
+        var context = canvas.getContext('2d');
+        var centerX = Math.round(canvas.width /2);
+        var centerY = Math.round(canvas.height / 2);
+
+        for( n = 0; n < arcs.length; n++) {
+          context.save();
+          context.beginPath();
+          var thisArc = arcs[n];
+
+          context.globalAlpha = thisArc.opacity;
+          context.arc(centerX, centerY, thisArc.radius, thisArc.startingAngle, thisArc.startingAngle + Math.PI, true);
+          context.lineWidth = thisArc.width;
+          // line width
+          context.strokeStyle = "#000000";
+          context.stroke();
+          context.closePath();
+          context.restore();
+        }
+      }
+
+      function updateArcs(arcs, timeDiff) {
+        for(n=0;n < arcs.length; n++) {
+          var thisArc = arcs[n];
+          var angleDiff = thisArc.speed * timeDiff / 1000;
+
+          thisArc.startingAngle -= angleDiff;
+        }
+      }
+
+      function animate(canvas, arcs, lastTime) {
+        var context = canvas.getContext('2d');
+
+        // update
+        var time = (new Date()).getTime();
+        var timeDiff = time - lastTime;
+        updateArcs(arcs, timeDiff);
+
+        // clear
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        // draw
+        drawArcs(canvas, arcs);
+
+        // request new frame
+        requestAnimFrame(function() {
+          animate(canvas, arcs, time);
+        });
+      }
+
+      var canvas = document.getElementById('tutorial');
+      var arcs = initArcs();
+      var time = (new Date()).getTime();
+      animate(canvas, arcs, time);
+
+      
+  </script>
+</html>
+
+
+
+

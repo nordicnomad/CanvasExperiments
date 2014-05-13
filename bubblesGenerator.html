@@ -1,0 +1,147 @@
+<html>
+  <head>
+    <title>Circle Click!</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/powerup.css" />
+    <style>
+      #tutorial {
+        cursor: crosshair;   
+      }
+      
+    </style>
+  </head>
+  <body onload="init();">
+    <canvas id="tutorial"></canvas>
+  </body>
+  <script>
+      
+      var canvas = document.getElementById('tutorial');
+        
+        if (canvas.getContext){
+          var ctx = canvas.getContext('2d');
+        }
+
+      var w = $(window).innerWidth();
+      var h = $(window).innerHeight();
+       
+      var bubbles = [];
+      var bubbleCount = 0;
+
+      var background = colorBackground();
+      var oldBubbles = []; 
+
+      function init(){
+
+        // We set the canvas size to match with the browser
+
+          $('#tutorial').attr('height', h);
+          $('#tutorial').attr('width', w);
+
+          $(window).resize(function(){
+            w = $(window).width();
+            h = $(window).height();
+
+            $('#tutorial').attr('height', h);
+            $('#tutorial').attr('width', w);
+          });
+
+        // Animating things   
+
+        setInterval(draw, 25);
+
+      }
+
+      function draw() {
+        
+        ctx.fillStyle = background; 
+
+        ctx.fillRect(0, 0, w, h);
+
+        for(n=0; n < bubbles.length; n++) {
+          var thisBubble = bubbles[n];
+
+          thisBubble.y -= thisBubble.speed;
+          ctx.beginPath(); 
+          ctx.arc(thisBubble.x, thisBubble.y, thisBubble.r, 0, 2 * Math.PI, false);
+          ctx.lineWidth = thisBubble.wide; 
+          ctx.strokeStyle = thisBubble.color;  
+          ctx.stroke();
+
+          if(thisBubble.y < 0) {
+           oldBubbles = bubbles.slice(n);
+           oldBubbles = [];
+          }
+        }
+
+        
+      }
+
+      //Helper Methods
+
+      function colorCircle() {
+        var base = Math.floor(Math.random() * 255) - 50; 
+
+        if(base < 50) {
+          base = 50; 
+        }
+
+        var r = base;
+        var g = base; 
+        var b = base + 150; 
+
+        var color = "rgba("+ r +","+ g +","+ b +",1)";
+
+        return color;
+      }
+
+      function colorBackground() {
+        var r = Math.floor(Math.random() * 50); 
+        var g = Math.floor(Math.random() * 50); 
+        var b = Math.floor(Math.random() * 50) + 150; 
+
+        var color = "rgba("+ r +","+ g +","+ b +",1)";
+
+        return color;
+      }      
+      
+      function handle_mouse(evt)
+      {
+        return {
+          x: evt.clientX,
+          y: evt.clientY
+        };
+      }
+
+      function addBubble() {
+        
+          
+          var mousePos = handle_mouse(event);
+          var radius = Math.floor(Math.random() * 50); 
+          var strokeWide = Math.floor(Math.random() *25); 
+          var bubbleSpeed = (80 - (radius + strokeWide)) / 4;
+
+          bubbles.push({
+            x: mousePos.x, 
+            y: mousePos.y, 
+            color: colorCircle(), 
+            r: radius, 
+            speed: bubbleSpeed, 
+            wide: strokeWide
+          });
+
+          
+
+          ctx.beginPath(); 
+          ctx.arc(mousePos.x, mousePos.y, radius, 0, 2 * Math.PI, false);
+          ctx.lineWidth = strokeWide; 
+          ctx.strokeStyle = colorCircle();  
+          ctx.stroke(); 
+
+      }
+
+      $('#tutorial').click(function() {
+          addBubble();
+        }); 
+
+  </script>
+</html>
