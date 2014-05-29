@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<link rel="stylesheet" href="shape.css" />
+	</head>
+	<body>
+	<div class="testAccordion">
+		<div id="angle1" class="polygon">
+			<div class="content slide-1">
+				<div class="actionCall">
+					<h3></h3>
+					<p>
+						<a class="overlayButton">Message</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div id="angle2" class="polygon">
+			<div class="content slide-2">
+				<div class="actionCall">
+					<h3></h3>
+					<p>
+						<a class="overlayButton">Message</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div id="angle3" class="polygon">
+			<div class="content slide-3">
+				<div class="actionCall">
+					<h3></h3>
+					<p>
+						<a class="overlayButton">Message</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div id="angle4" class="polygon">
+			<div class="content slide-4">
+				<div class="actionCall">
+					<h3></h3>
+					<p>
+						<a class="overlayButton">Message</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div id="angle5" class="polygon active">
+			<div class="content slide-5">
+				<div class="actionCall">
+					<h3></h3>
+					<p>
+						<a class="overlayButton">Message</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script>
+		$('.polygon').click(function() {
+			$('.testAccordion >div').each(function() {
+				$(this).removeClass('active');
+			});
+			$(this).toggleClass('active');
+		});
+
+	
+	</script>
+	</body>
+</html>

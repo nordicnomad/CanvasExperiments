@@ -1,0 +1,153 @@
+.testAccordion {
+	width: 99%;
+	max-width: 1200px;
+	margin: auto;
+	margin-top: 50px;
+	height: 400px;
+	padding-left: 5%;
+}
+
+.polygon  {	
+	background-color: #000;
+	display: inline-block;
+	margin-left: 15px;
+	float: left;
+	height: 400px;
+	width: 6%;
+	overflow: hidden;
+	-webkit-transform: skewX(25deg);
+	 -moz-transform: skewX(25deg);
+	 -ms-transform: skewX(25deg);
+	 -o-transform: skewX(25deg);
+	 	transform: skewX(25deg); 
+	-webkit-transition: width 500ms linear;
+    -moz-transition: width 500ms ease-out;
+    -o-transition: width 500ms ease-out;
+    	transition: width 500ms ease-out;
+	 box-shadow: 0 0 4px #000; 
+}
+
+.content {
+	width: 900px;
+	height: 400px;
+	margin-left: -400px;
+	background-position: center center; 
+	background-size-height: 100%;
+	-webkit-transform: skewX(-25deg);
+	-moz-transform: skewX(-25deg);
+	-ms-transform: skewX(-25deg);
+	-o-transform: skewX(-25deg);
+		transform: skewX(-25deg);
+	-webkit-transition: all 500ms linear;
+    -moz-transition: all 500ms ease-out;
+    -o-transition: all 500ms ease-out;
+    	transition: all 500ms ease-out;
+}
+
+.active .content {
+	display: block;
+	width: 900px;
+	height: 400px;
+	background-color: #000;
+	margin-left: -135px;
+	-webkit-transition: all 500ms linear;
+    -moz-transition: all 500ms ease-out;
+    -o-transition: all 500ms ease-out;
+    	transition: all 500ms ease-out;
+}
+
+.polygon.active {
+	width: 55%;
+	-webkit-transition: width 500ms linear;
+    -moz-transition: width 500ms ease-out;
+    -o-transition: width 500ms ease-out;
+    	transition: width 500ms ease-out;
+}
+
+.testAccordion div:first-child .content {
+	background-image: url(http://www.newsrevealer.com/wp-content/uploads/2014/03/maserati-wallpaper.jpg);
+	
+}
+.testAccordion div:nth-child(2) .content {
+	background-image: url(http://gimotorsportsla.com/files/2011/05/Maserati-GranTurismo-S-Automatic-1.jpg);
+	
+}
+.testAccordion div:nth-child(3) .content {
+	background-image: url(http://image.motortrend.com/f/wot/1403_maserati_alfieri_concept_looks_forward_at_geneva_2014/69159495/maserati-alfieri-concept-show-floor-front--side-view.jpg);
+	
+}
+.testAccordion div:nth-child(4) .content {
+	background-image: url(http://www.gtspirit.com/wp-content/uploads/2013/09/Maserati_Gran-Turismo_VVSCV3_381.jpg);
+	 
+}
+.testAccordion div:nth-child(5) .content {
+	background-image: url(http://newscarsblog.com/wp-content/uploads/2014/05/2015-Maserati-Ghibli-S-Q4-Release-date.jpg);
+}
+
+.actionCall h3, .actionCall p {
+	margin: 0; 
+}
+
+@media screen and (max-width: 940px){
+	.polygon  {	
+		-webkit-transform: skewX(12deg);
+		 -moz-transform: skewX(12deg);
+		 -ms-transform: skewX(12deg);
+		 -o-transform: skewX(12deg);
+		 	transform: skewX(12deg); 
+	}
+
+	.content {
+		-webkit-transform: skewX(-12deg);
+		-moz-transform: skewX(-12deg);
+		-ms-transform: skewX(-12deg);
+		-o-transform: skewX(-12deg);
+			transform: skewX(-12deg);
+	}
+}
+
+@media screen and (max-width: 600px){
+	.testAccordion {
+		padding: 0;
+		margin: 0;
+		height: 650px;
+		position: relative;
+
+	}
+	.polygon  {	
+		
+		-webkit-transform: skewX(0deg);
+		 -moz-transform: skewX(0deg);
+		 -ms-transform: skewX(0deg);
+		 -o-transform: skewX(0deg);
+		 	transform: skewX(0deg); 
+		height: 100px;
+		width: 20%;
+	}
+
+	.polygon.active {
+		position: absolute;
+		margin-left: 0;
+		margin-top: 0;
+		top: 150px;
+		left: 0px;
+		height: 350px;
+		width: auto;
+		min-width: 290px;
+		max-width: 100%;
+	}
+
+	.content {
+		
+		background-size: 100% auto;
+		-webkit-transform: skewX(0deg);
+		-moz-transform: skewX(0deg);
+		-ms-transform: skewX(0deg);
+		-o-transform: skewX(0deg);
+			transform: skewX(0deg);
+	}
+
+	.active .content {
+		background-size: 100% auto;
+	}
+}
